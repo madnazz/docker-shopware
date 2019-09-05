@@ -1,0 +1,20 @@
+version: '2'
+syncs:
+#    vendor-sync:
+#      src: './vendor'
+#      sync_strategy: 'rsync'
+#      sync_args: '--delete'
+#      sync_host_port: 10872
+#      sync_excludes: ["bin/"]
+#      notify_terminal: true
+    ${PROJECT_NAME}-app-sync:
+      src: './'
+#      sync_userid: '33'
+      sync_userid: '1000'
+#      sync_host_ip: 'auto'
+      sync_host_port: '10872'
+#      sync_groupid: '33'
+      sync_args: '-prefer newer -copyonconflict'
+#      sync_excludes: ["vendor",".idea",".DS_Store",".git",".gitignore",".gitmodules","Dockerfile","data","tmp","var/cache","web/cache","docker*.yml","docker","images.zip"]
+      sync_excludes: [".idea",".DS_Store",".git",".gitignore",".gitmodules","Dockerfile","data","tmp","var/cache","web/cache","docker*.yml","docker","images.zip"]
+      notify_terminal: true

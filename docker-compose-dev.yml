@@ -1,0 +1,81 @@
+version: '3'
+services:
+    app:
+        container_name: ${PROJECT_NAME}_app
+        hostname: app
+        volumes:
+#            - vendor-sync:/var/www/vendor:nocopy
+            - app-sync:/var/www:nocopy
+        ports:
+            - 80:80
+            - 443:443
+        restart: always
+        depends_on:
+            - mysql
+            - mail
+            - redis
+            - redis_session
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: ${PROJECT_NAME}_phpmyadmin
+        hostname: phpmyadmin
+        ports:
+            - 8080:80
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mysql
+        restart: always
+        depends_on:
+            - mysql
+    redis:
+        image: redis:4
+        container_name: ${PROJECT_NAME}_redis
+        hostname: redis
+        restart: always
+        ports:
+            - 6379:6379
+    redis_session:
+        image: redis:4
+        container_name: ${PROJECT_NAME}_redis_session
+        hostname: redis_session
+        restart: always
+        command: --port 6380
+        ports:
+            - 6380:6380
+    mail:
+        image: mailhog/mailhog
+        container_name: ${PROJECT_NAME}_mailhog
+        hostname: mailhog
+        restart: always
+        ports:
+            - 8025:8025
+            - 1025:1025
+    elasticsearch:
+        image: elasticsearch:6.5.0
+        hostname: elasticsearch
+        container_name: ${PROJECT_NAME}_elasticsearch
+        restart: always
+        ports:
+            - 9200:9200
+    mysql:
+        image: mysql:5.7
+        hostname: mysql
+        container_name: ${PROJECT_NAME}_mysql
+        restart: always
+        ports:
+            - 3306:3306
+        restart: always
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_HOST= %
+        volumes:
+            - ./data/db/mysql:/var/lib/mysql
+volumes:
+#  vendor-sync:
+#    external: true
+  app-sync:
+    external:
+        name: ${PROJECT_NAME}-app-sync

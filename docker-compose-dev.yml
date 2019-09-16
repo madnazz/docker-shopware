@@ -15,6 +15,8 @@ services:
             - mail
             - redis
             - redis_session
+        cap_add:
+            - SYS_PTRACE
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: ${PROJECT_NAME}_phpmyadmin

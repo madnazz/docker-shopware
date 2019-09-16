@@ -1,0 +1,11 @@
+
+            AuthType Basic
+            AuthName "Restricted Content"
+            AuthUserFile /var/www/.htpasswd
+            Require valid-user
+            satisfy any
+            satisfy any
+            deny from all
+            allow from 192.168.1.1
+            allow from 46.127.225.11
+            

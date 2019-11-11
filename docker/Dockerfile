@@ -141,6 +141,8 @@ RUN echo "xdebug.remote_host=%host_ip%" >> /etc/php/7.2/mods-available/xdebug.in
 ## TIMEZONE
 RUN printf '[PHP]\ndate.timezone = "Europe/Zurich"\n' > /etc/php/7.2/cli/php.ini
 
+## MYSQL
+RUN echo "innodb_buffer_pool_size=1G" >> /etc/mysql/conf.d/mysqldump.cnf
 
 ## PHP-FPM OWNERSHIP
 RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php/7.2/fpm/pool.d/www.conf && \

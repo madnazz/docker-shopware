@@ -8,6 +8,7 @@ syncs:
 #      sync_excludes: ["bin/"]
 #      notify_terminal: true
     ${PROJECT_NAME}-app-sync:
+      sync_strategy: 'native_osx'
       src: './'
 #      sync_userid: '33'
       sync_userid: '1000'
